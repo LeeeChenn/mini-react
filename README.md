@@ -18,11 +18,11 @@
 
 ## Day 3: 统一提交&实现 function component 
 
-- [ ] 01 实现统一提交
+- [x] [01 实现统一提交](https://github.com/LeeeChenn/mini-react/tree/main/VO4)
   
-- [ ] 02 实现 function component
+- [x] [02 实现 function component](https://github.com/LeeeChenn/mini-react/tree/main/VO5)
 
-- [ ] 03 重构 function component
+- [x] [03 重构 function component](https://github.com/LeeeChenn/mini-react/tree/main/VO6)
 
 ## Day 4: 进军 vdom 的更新
 
