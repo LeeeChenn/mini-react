@@ -26,11 +26,11 @@
 
 ## Day 4: 进军 vdom 的更新
 
-- [ ] 01 实现事件绑定
+- [x] [01 实现事件绑定](https://github.com/LeeeChenn/mini-react/tree/main/VO7)
 
-- [ ] 02 实现更新 props
+- [x] [02 实现更新 props](https://github.com/LeeeChenn/mini-react/tree/main/VO8)
 
-- [ ] 03 重构 props
+- [x] [03 重构 props](https://github.com/LeeeChenn/mini-react/tree/main/VO8)
 
 ## Day 5: 击杀 update children
 
