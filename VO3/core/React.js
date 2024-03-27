@@ -27,7 +27,7 @@ function createDom(type) {
 }
 
 function updateProps(dom, props) {
-    Object.keys(props).map(key => {
+    Object.keys(props).forEach(key => {
         if (key !== 'children') {
             dom[key] = props[key];
         }
@@ -38,7 +38,7 @@ function initChildren(fiber) {
     let children = fiber.props.children;
     let prevChild = null;
     children.forEach((child, index) => {
-        let newFiber = {
+        const newFiber = {
             ...child,
             parent: fiber,
             sibling: null,
@@ -58,7 +58,7 @@ function performFiberOfUnit(fiber) {
     if (!fiber.dom) {
         const dom = (fiber.dom = createDom(fiber.type))
 
-        fiber.parent.dom.appendChild(dom);
+        fiber.parent.dom.append(dom);
         updateProps(dom, fiber.props);
     }
 
@@ -94,8 +94,10 @@ function fiberLoop(deadline) {
 
 function render(el, container) {
     nextFiberOfUnit = {
-        parent: {dom: container},
-        ...el
+        dom: container,
+        props: {
+            children: [el]
+        }
     }
     requestIdleCallback(fiberLoop);
 }

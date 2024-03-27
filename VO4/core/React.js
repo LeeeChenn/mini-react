@@ -27,7 +27,7 @@ function createDom(type) {
 }
 
 function updateProps(dom, props) {
-    Object.keys(props).map(key => {
+    Object.keys(props).forEach(key => {
         if (key !== 'children') {
             dom[key] = props[key];
         }
@@ -101,20 +101,23 @@ function fiberLoop(deadline) {
 }
 
 function submitAll() {
-    submitWork(root);
+    submitWork(root.child);
+    root = null
 }
 
 function submitWork(fiber) {
     if (!fiber) return;
-    fiber.parent.dom.appendChild(fiber.dom);
+    fiber.parent.dom.append(fiber.dom);
     submitWork(fiber.child);
     submitWork(fiber.sibling);
 }
 
 function render(el, container) {
     nextFiberOfUnit = {
-        parent: {dom: container},
-        ...el
+        dom: container,
+        props: {
+            children: [el]
+        }
     }
 
     root = nextFiberOfUnit;

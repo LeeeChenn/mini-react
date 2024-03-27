@@ -1,6 +1,4 @@
 function createTextNode(text) {
-    console.log('create text node')
-    
     return {
         type: "TEXT_ELEMENT",
         props: {
@@ -11,7 +9,6 @@ function createTextNode(text) {
 }
 
 function createElement(type, props, ...children) {
-    console.log('create element')
     return {
         type,
         props: {
@@ -25,9 +22,8 @@ function createElement(type, props, ...children) {
 
 function render(el, container) {
     const dom = el.type === 'TEXT_ELEMENT' ?  
-        document.createTextNode(el.props.nodeValue)
+        document.createTextNode("")
         : document.createElement(el.type);
-    container.appendChild(dom);
 
     Object.keys(el.props).map(key => {
         if (key !== 'children') {
@@ -38,6 +34,8 @@ function render(el, container) {
     el.props.children.forEach(child => {
         render(child, dom);
     })
+
+    container.append(dom);
 }
 
 const React = {

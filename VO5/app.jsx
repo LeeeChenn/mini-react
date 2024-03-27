@@ -21,8 +21,9 @@ function App() {
     return (
         <div id="app">
             Mini React
-            <Counter num={10}></Counter>
+            <Counter num={11}></Counter>
             <Counter num={20}></Counter>
+            <div>sub<span> span</span></div>
         </div>
     )
 }

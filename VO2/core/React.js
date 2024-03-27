@@ -22,11 +22,10 @@ function createElement(type, props, ...children) {
 
 function render(el, container) {
     const dom = el.type === 'TEXT_ELEMENT' ?  
-        document.createTextNode(el.props.nodeValue)
+        document.createTextNode("")
         : document.createElement(el.type);
-    container.appendChild(dom);
 
-    Object.keys(el.props).map(key => {
+    Object.keys(el.props).forEach(key => {
         if (key !== 'children') {
             dom[key] = el.props[key]
         }
@@ -35,6 +34,8 @@ function render(el, container) {
     el.props.children.forEach(child => {
         render(child, dom);
     })
+
+    container.append(dom);
 }
 
 const React = {
