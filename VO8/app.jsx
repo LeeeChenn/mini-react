@@ -1,16 +1,14 @@
 import React from "./core/React.js";
 
 let count = 1;
-let props = {id: '1111'}
 function Counter() {
     function handleClick() {
         count++;
-        props = {}
-        console.log('click ' + count)
         React.update();
     }
+    console.log('counter called')
     return (
-        <div {...props}>
+        <div>
             count: {count}
             <button onClick={handleClick}>click</button>
         </div>
@@ -18,12 +16,31 @@ function Counter() {
 }
 
 function App() {
+    function handleClick() {
+        count++;
+        React.update();
+    }
     return (
         <div id="app">
-            Mini React
-            <Counter></Counter>
+            count: {count}
+            <button onClick={handleClick}>click it</button>
+            {/* Mini React */}
+            {/* <Counter></Counter> */}
         </div>
     )
 }
+
+// 失败，没有使用 jsx，不会调用 createElement
+// function handleClick() {
+//     count++;
+//     React.update();
+// }
+
+// const App = (
+//     <div id="app">
+//         count: {count}
+//         <button onClick={handleClick}>click</button>
+//     </div>
+// )
 
 export default App;

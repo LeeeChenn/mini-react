@@ -1,3 +1,4 @@
+let isUpdate = false;
 function createTextNode(text) {
     return {
         type: "TEXT_ELEMENT",
@@ -9,6 +10,8 @@ function createTextNode(text) {
 }
 
 function createElement(type, props, ...children) {
+    console.log('create element')
+    console.log(props, children)
     return {
         type,
         props: {
@@ -155,6 +158,7 @@ function fiberLoop(deadline) {
     }
 
     if (!nextFiberOfUnit && wipRoot) {
+        console.log('submit')
         // 统一提交
         submitRoot()
     }
@@ -197,6 +201,8 @@ function render(el, container) {
         }
     }
 
+    isUpdate = false;
+
     nextFiberOfUnit = wipRoot; 
     requestIdleCallback(fiberLoop);
 }
@@ -207,6 +213,10 @@ function update() {
         props: currentRoot.props,
         alternate: currentRoot
     }
+
+    isUpdate = true;
+
+    // console.log(wipRoot.props)
     
     nextFiberOfUnit = wipRoot; 
     requestIdleCallback(fiberLoop);
