@@ -36,11 +36,11 @@
 
 - [x] [01 diff-更新 children](https://github.com/LeeeChenn/mini-react/tree/main/VO9)
 
-- [x] [02 diff-删除多余的老节点](https://github.com/LeeeChenn/mini-react/tree/main/V10)
+- [x] [02 diff-删除多余的老节点](https://github.com/LeeeChenn/mini-react/tree/main/VO10)
 
-- [x] [03 解决 edge case 的方式](https://github.com/LeeeChenn/mini-react/tree/main/V11)
+- [x] [03 解决 edge case 的方式](https://github.com/LeeeChenn/mini-react/tree/main/VO11)
 
-- [x] [04 优化更新 减少不必要的计算](https://github.com/LeeeChenn/mini-react/tree/main/V12)
+- [x] [04 优化更新 减少不必要的计算](https://github.com/LeeeChenn/mini-react/tree/main/VO12)
 
 ## Day 6: 搞定 useState
 
