@@ -34,13 +34,13 @@
 
 ## Day 5: 击杀 update children
 
-- [ ] 01 diff-更新 children
+- [x] [01 diff-更新 children](https://github.com/LeeeChenn/mini-react/tree/main/VO8)
 
-- [ ] 02 diff-删除多余的老节点
+- [x] [02 diff-删除多余的老节点](https://github.com/LeeeChenn/mini-react/tree/main/VO8)
 
-- [ ] 03 解决 edge case 的方式
+- [x] [03 解决 edge case 的方式](https://github.com/LeeeChenn/mini-react/tree/main/VO8)
 
-- [ ] 04 优化更新 减少不必要的计算
+- [x] [04 优化更新 减少不必要的计算](https://github.com/LeeeChenn/mini-react/tree/main/VO8)
 
 ## Day 6: 搞定 useState
 
