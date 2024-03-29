@@ -67,6 +67,7 @@ function updateProps(dom, nextProps, prevProps) {
     })
 }
 
+let deletions = []
 function reconcileChildren(fiber, children) {
     let oldFiber = fiber.alternate?.child;
     let prevChild = null;
@@ -93,6 +94,9 @@ function reconcileChildren(fiber, children) {
                 child: null,
                 effectTag: "placement"
             }
+            if (oldFiber) {
+                deletions.push(oldFiber);
+            }
         }
 
         if (oldFiber) {
@@ -106,6 +110,11 @@ function reconcileChildren(fiber, children) {
         }
         prevChild = newFiber;
     })
+
+    while (oldFiber) {
+        deletions.push(oldFiber);
+        oldFiber = oldFiber.sibling;
+    }
 }
 
 function updateFunctionComponent(fiber) {
@@ -167,10 +176,24 @@ function fiberLoop(deadline) {
     }
 }
 
+function commitDeletion(fiber) {
+    if (fiber.dom) {
+        let parent = fiber.parent;
+        while (!parent.dom) {
+            parent = parent.parent
+        }
+        parent.dom.removeChild(fiber.dom);
+    } else {
+        commitDeletion(fiber.child);
+    }
+}
+
 function submitRoot() {
+    deletions.forEach(commitDeletion)
     submitWork(wipRoot.child);
     currentRoot = wipRoot;
     wipRoot = null;
+    deletions = [];
 }
 
 function submitWork(fiber) {

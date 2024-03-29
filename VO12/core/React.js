@@ -9,8 +9,6 @@ function createTextNode(text) {
 }
 
 function createElement(type, props, ...children) {
-    console.log('create element')
-    console.log(props, children)
     return {
         type,
         props: {
@@ -31,17 +29,6 @@ function createDom(type) {
 }
 
 function updateProps(dom, nextProps, prevProps) {
-    // Object.keys(nextProps).forEach(key => {
-    //     if (key !== 'children') {
-    //         if (key.startsWith('on')) {
-    //             let type = key.slice(2).toLowerCase();
-    //             dom.addEventListener(type, nextProps[key]);
-    //         } else {
-    //             dom[key] = nextProps[key];
-    //         }
-    //     }
-    // })
-
     // 1. old 有 new 没有 删除
     Object.keys(prevProps).forEach(key => {
         if (key !== 'children') {
@@ -67,6 +54,7 @@ function updateProps(dom, nextProps, prevProps) {
     })
 }
 
+let deletions = []
 function reconcileChildren(fiber, children) {
     let oldFiber = fiber.alternate?.child;
     let prevChild = null;
@@ -85,13 +73,18 @@ function reconcileChildren(fiber, children) {
                 alternate: oldFiber
             }
         } else {
-            newFiber = {
-                ...child,
-                parent: fiber,
-                sibling: null,
-                dom: null,
-                child: null,
-                effectTag: "placement"
+            if (child) {
+                newFiber = {
+                    ...child,
+                    parent: fiber,
+                    sibling: null,
+                    dom: null,
+                    child: null,
+                    effectTag: "placement"
+                }
+            }
+            if (oldFiber) {
+                deletions.push(oldFiber);
             }
         }
 
@@ -104,11 +97,19 @@ function reconcileChildren(fiber, children) {
         } else {
             prevChild.sibling = newFiber;
         }
-        prevChild = newFiber;
+        if (newFiber) {
+            prevChild = newFiber;
+        }
     })
+
+    while (oldFiber) {
+        deletions.push(oldFiber);
+        oldFiber = oldFiber.sibling;
+    }
 }
 
 function updateFunctionComponent(fiber) {
+    wipFiber = fiber;
     reconcileChildren(fiber, [fiber.type(fiber.props)]);
 }
 
@@ -147,6 +148,7 @@ function performFiberOfUnit(fiber) {
 
 // work in progress
 let wipRoot = null;
+let wipFiber = null;
 let currentRoot = null;
 let nextFiberOfUnit = null;
 function fiberLoop(deadline) {
@@ -154,6 +156,10 @@ function fiberLoop(deadline) {
     while (!shouldYeild && nextFiberOfUnit) {
         shouldYeild = deadline.timeRemaining() < 1;
         nextFiberOfUnit = performFiberOfUnit(nextFiberOfUnit);
+
+        if (wipRoot?.sibling?.type === nextFiberOfUnit?.type) {
+            nextFiberOfUnit = null;
+        }
     }
 
     if (!nextFiberOfUnit && wipRoot) {
@@ -167,10 +173,24 @@ function fiberLoop(deadline) {
     }
 }
 
+function commitDeletion(fiber) {
+    if (fiber.dom) {
+        let parent = fiber.parent;
+        while (!parent.dom) {
+            parent = parent.parent
+        }
+        parent.dom.removeChild(fiber.dom);
+    } else {
+        commitDeletion(fiber.child);
+    }
+}
+
 function submitRoot() {
+    deletions.forEach(commitDeletion)
     submitWork(wipRoot.child);
     currentRoot = wipRoot;
     wipRoot = null;
+    deletions = [];
 }
 
 function submitWork(fiber) {
@@ -205,14 +225,20 @@ function render(el, container) {
 }
 
 function update() {
-    wipRoot = {
-        dom: currentRoot.dom,
-        props: currentRoot.props,
-        alternate: currentRoot
+    let currentFiber = wipFiber;
+
+    return () => {
+        wipRoot = {
+            ...currentFiber,
+            alternate: currentFiber
+        }
+    
+        // console.log(wipRoot.props)
+        
+        nextFiberOfUnit = wipRoot; 
+        requestIdleCallback(fiberLoop);
     }
 
-    nextFiberOfUnit = wipRoot; 
-    requestIdleCallback(fiberLoop);
 }
 
 
