@@ -44,18 +44,18 @@
 
 ## Day 6: 搞定 useState
 
-- [ ] 01 实现 useState
+- [x] [01 实现 useState](https://github.com/LeeeChenn/mini-react/tree/main/VO13)
 
-- [ ] 02 批量执行 action
+- [x] [02 批量执行 action](https://github.com/LeeeChenn/mini-react/tree/main/VO14)
 
-- [ ] 03 提前检测 减少不必要的更新
+- [x] [03 提前检测 减少不必要的更新](https://github.com/LeeeChenn/mini-react/tree/main/VO15)
 
 ## Day 7: 搞定 useEffect
 
-- [ ] 01 实现 useEffect
+- [x] [01 实现 useEffect](https://github.com/LeeeChenn/mini-react/tree/main/VO16)
 
-- [ ] 02 实现 cleanup
-
-- [ ] 03 ending 最后一个任务
+- [x] [02 实现 cleanup](https://github.com/LeeeChenn/mini-react/tree/main/VO17)
 
 ## Day 8: 实现 todo-list
+
+- [x] [01 todo-list](https://github.com/LeeeChenn/mini-react/tree/main/VO18)
