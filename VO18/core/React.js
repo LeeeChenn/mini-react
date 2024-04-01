@@ -68,7 +68,7 @@ function reconcileChildren(fiber, children) {
     children.forEach((child, index) => {
         const isSameType = oldFiber && oldFiber.type === child.type;
         let newFiber;
-        if (isSameType && oldFiber.dom) {
+        if (isSameType) {
             // update
             newFiber = {
                 ...child,
@@ -269,7 +269,7 @@ function commitEffect() {
 function submitWork(fiber) {
     if (!fiber) return;
     
-    if (fiber.effectTag === 'update') {
+    if (fiber.effectTag === 'update' && fiber.dom) {
         updateProps(fiber.dom, fiber.props, fiber.alternate?.props)
     } else if (fiber.effectTag === 'placement') {
         if (fiber.dom) {
